@@ -1,58 +1,45 @@
 ##Import
 import time
 
-from config import *
-from instruction_queue import *
-from reservation_station import *
-from adder import *
-from cdb import *
+import system
+import instruction_queue
+import reservation_station
+import adder
+import cdb
 
-#operand = 0
-#dest = 0
-#vj = 0
-#vk = 0
+system.initialize()
 
 ##Main loop
-while (clock < max_time):
+while (system.clock < system.max_time):
 
-	print("clock cycle: ", clock)
+	print("clock cycle: ", system.clock)
 
-	instruction_queue()
+	instruction = instruction_queue.exe()
 
-	# for i in range(add_number):
-	# 	reservation_station_adder(i)
+	print(instruction)
 
-	# for i in range(add_number):
-	# 	adder(clock, i, 0, 0, 0, 0)
+	for i in range(system.add_number):
+	 	reservation_station.add_exe(i, instruction)
 
-	if clock == 1:
-		adder(clock, 0, "ADD", 1, 2, "R0")
-		adder(clock, 1, 0, 0, 0, 0)
-		adder(clock, 2, 0, 0, 0, 0)
-		v1_add[2] = "R0"
+	for i in range(system.add_number):
+		adder.exe(i, 0, 0, 0, 0)
 
-	elif clock == 2:
-		adder(clock, 0, 0, 0, 0, 0)
-		adder(clock, 1, "ADD", 4, 6, "R1")
-		adder(clock, 2, 0, 0, 0, 0)
+	# for i in range(len(system.result_queue)):
+	# 		print(system.result_queue[i])
 
-	else:
-		for i in range(add_number):
-			adder(clock, i, 0, 0, 0, 0)
-
-	for i in range(len(result_queue)):
-			print(result_queue[i])
-
-	cdb()
+	cdb.exe()
 
 	for i in range(5):
-		print("Register", i, ":", register[i])
+		print("Register", i, ":", system.register[i])
+	for i in range(5):
+		print("Busy Register", i, ":", system.busy_reg[i])
+	# for i in range(5):
+	# 	print("empty Register", i, ":", system.empty_reg[i])
 
 	for i in range(3):
-		print("reservation_station_adder", i,  "v1", v1_add[i])
+		print("reservation_station_adder", i,  "v1", reservation_station.v1_add[i], "v2", reservation_station.v2_add[i])
 
 
 	## Next clock cycle
-	clock += 1
-	time.sleep(sleep_duration)
-
+	system.clock += 1
+	time.sleep(system.sleep_duration)

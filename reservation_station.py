@@ -1,45 +1,46 @@
-from config import *
+import system
+import adder
 
-def reservation_station_adder(number):
+global busy_res_add, op_res_add, v1_add, v2_add, dest_add, launched_add
 
-	global op_res_add, v1_add, v2_add, busy_res_add, v1_add_ready, v2_add_ready, operand, vj, vk, instruction_issued
+busy_res_add = [0]*system.add_number
+op_res_add = [0]*system.add_number
+v1_add = [0]*system.add_number
+v2_add = [0]*system.add_number
+dest_add = [0]*system.add_number
+launched_add = [0]*system.add_number
 
-	if busy_res_add[number] == 0 and (operand == "ADD" or operand == "SUB") and instruction_issued == 0:
+def add_exe(number, instruction):
+	if busy_res_add[number] == 0 and (instruction[0] == "ADD" or instruction[0] == "SUB") and system.instruction_issued == 0:
+
 		busy_res_add[number] = 1
-		op_res_add[number] = operand
-		v1_add[number] = vj
-		v2_add[number] = vk
+		launched_add[number] = 0
+		op_res_add[number] = instruction[0]
+		dest_add[number] = instruction[1]
+		v1_add[number] = instruction[2]
+		v2_add[number] = instruction[3]
 
-		if(vj[0] != 'R'):
-			v1_add[number] = int(vj)
-			v1_add_ready = 1
+		if(v1_add[number][0] != 'R'):
+			v1_add[number] = int(v1_add[number])	
 		else:
-			v1_add[number] = vj
-			reg_number = int[vj[1]]
-			if busy_reg[reg_number] == 0 and empty_reg[reg_number] == 0:
-				v1_add[number] = register[reg_number]
-				v1_add_ready = 1
-				
-		if(vk[0] != 'R'):
-			v2_add[number] = int(vk)
-			v2_add_ready = 1
+			reg_number = int(v1_add[number][1])
+			if system.busy_reg[reg_number] == 0 and system.empty_reg[reg_number] == 0:
+				v1_add[number] = system.register[reg_number]
+		
+		if(v2_add[number][0] != 'R'):
+			v2_add[number] = int(v2_add[number])
 		else:
-			v2_add[number] = vk
-			reg_number = int[vk[1]]
-			if busy_reg[reg_number] == 0 and empty_reg[reg_number] == 0:
-				v2_add[number] = register[reg_number]
-				v2_add_ready = 1
+			reg_number = int(v2_add[number][1])
+			if system.busy_reg[reg_number] == 0 and system.empty_reg[reg_number] == 0:
+				v2_add[number] = system.register[reg_number]
 
-		instruction_issued = 1
-		#print("instruction_issued")
+		system.instruction_issued = 1			
 
-		if v1_add_ready == 1 and v2_add_ready == 1:
-			#adder(number, op_res_add[number], v1[number], v2[number])
-			pass
+	if busy_res_add[number] == 1 and launched_add[number] == 0:
+		if isinstance(v1_add[number], int) and isinstance(v2_add[number], int):
+			adder.exe(number, op_res_add[number], v1_add[number], v2_add[number], dest_add[number])
+			launched_add[number] = 1
 
-	elif busy_res_add[number] == 1:
-		pass
-
+		#print(number, op_res_add[number], v1_add[number], v2_add[number], dest_add[number])
 	
-	print("reservation_station_adder number", number, ":" , "operand", op_res_add[number], "|",  v1[number], "|", v2[number])
-	print()
+	
