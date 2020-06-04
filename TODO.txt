@@ -1,7 +1,6 @@
 TODO:
 
-	-	stall
-	- 	free reservation station 
 	-	mul
+	-	class
 	- 	load/store
 	-	floating point

@@ -5,7 +5,7 @@ def initialize():
 	global clock
 	clock = 1
 	global max_time
-	max_time = 8
+	max_time = 16
 	global sleep_duration 
 	sleep_duration = 1
 
@@ -17,7 +17,7 @@ def initialize():
 	empty_reg = [1,1,1,1,1]
 
 	global inst_queue
-	inst_queue = ["ADD R0 1 2", "ADD R1 4 6", "ADD R2 R0 R1"]
+	inst_queue = ["ADD R0 1 2", "ADD R1 R0 7", "ADD R2 2 2", "SUB R3 R2 1", "ADD R4 5 16", "ADD R4 R1 R3"]
 
 	global result_queue
 	result_queue = [[] for i in range(10)]
@@ -28,4 +28,7 @@ def initialize():
 
 	global instruction_issued
 	instruction_issued = 0
+
+	global stall
+	stall = 0
 
