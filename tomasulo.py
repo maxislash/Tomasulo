@@ -6,6 +6,7 @@ import system
 import instruction_queue
 import reservation_station
 import adder
+import multiplier
 import cdb
 
 system.initialize()
@@ -18,6 +19,11 @@ for system.clock in range(1,system.max_time):
 	for i in range(system.add_number):
 	 	reservation_station.add_exe(i, instruction)
 	 	adder.exe(i, 0, 0, 0, 0)
+
+	for i in range(system.mul_number):
+		reservation_station.mul_exe(i, instruction)
+		multiplier.exe(i, 0, 0, 0, 0)
+
 
 	cdb.exe()
 

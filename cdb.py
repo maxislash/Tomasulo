@@ -1,8 +1,8 @@
 import system
-from reservation_station import v1_add, v2_add
+from reservation_station import v1_add, v2_add, v1_mul, v2_mul
 
 global register
-global v1_add, v2_add
+global v1_add, v2_add, v1_mul, v2_mul
 
 def exe():
 
@@ -20,4 +20,11 @@ def exe():
 			if v2_add[j] == result[0]:
 				v2_add[j] = result[1]
 				
+		for j in range(system.mul_number):
+			if v1_mul[j] == result[0]:
+				v1_mul[j] = result[1]
+				
+			if v2_mul[j] == result[0]:
+				v2_mul[j] = result[1]
+
 		system.result_queue.pop(0)

@@ -1,6 +1,5 @@
 TODO:
 
-	-	mul
-	-	class
 	- 	load/store
-	-	floating point
+	-	comment and proper read_me
+	-	class
