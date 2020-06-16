@@ -4,6 +4,7 @@ import display
 
 import system
 import instruction_queue
+import memory
 import reservation_station
 import adder
 import multiplier
@@ -15,6 +16,8 @@ system.initialize()
 for system.clock in range(1,system.max_time):
 	
 	instruction = instruction_queue.exe()
+
+	memory.exe(instruction)
 
 	for i in range(system.add_number):
 	 	reservation_station.add_exe(i, instruction)
