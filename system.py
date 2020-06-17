@@ -9,6 +9,7 @@ def initialize():
 	clock = 1
 	global max_time
 	max_time = 26
+	#max_time = 10
 	global sleep_duration 
 	sleep_duration = 1
 
@@ -24,6 +25,7 @@ def initialize():
 
 	global inst_queue
 	inst_queue = ["ADD R0 1 2", "ADD R1 R0 7", "ADD R2 2 2", "SUB R3 R2 1", "ADD R4 5 16", "ADD R4 R1 R3", "MUL R0 5 6", "LD R1 1 0"]
+	#inst_queue = ["ADD R0 1 2", "LD R1 1 0", "LD R2 4 0"]
 
 	global load_time
 	load_time = 2

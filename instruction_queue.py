@@ -10,6 +10,12 @@ def exe():
 		issue_stall = 0
 		system.stall = 0
 
+	if len(system.inst_queue) == 0 and system.stall == 0:
+		operand = 0
+		dest = 0
+		vj = 0
+		vk = 0
+
 	if len(system.inst_queue) > 0 and system.stall == 0:
 
 		## Decoding next instruction and removing it from the queue

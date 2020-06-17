@@ -44,7 +44,7 @@ def add_exe(number, instruction):
 
 		#print("instruction", instruction, "issued to reservation station", number)		
 
-	if number == system.add_number-1 and system.instruction_issued == 0:
+	if number == system.add_number-1 and system.instruction_issued == 0 and (instruction[0] == "ADD" or instruction[0] == "SUB"):
 		system.stall = 1
 
 
@@ -91,5 +91,5 @@ def mul_exe(number, instruction):
 
 		#print("instruction", instruction, "issued to reservation station", number)		
 
-	if number == system.add_number-1 and system.instruction_issued == 0:
+	if number == system.add_number-1 and system.instruction_issued == 0 and (instruction[0] == "MUL" or instruction[0] == "DIV"):
 		system.stall = 1
