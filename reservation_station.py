@@ -11,6 +11,8 @@ dest_add = [0]*system.add_number
 
 def add_exe(number, instruction):
 
+	print("reservation station number", number, "parse instruction", instruction, "busy", adder.busy_add[number], "issued", system.instruction_issued)
+
 	if adder.busy_add[number] == 1 and adder.start_add[number] == 0:
 		if isinstance(v1_add[number], int) and isinstance(v2_add[number], int):
 			adder.exe(number, op_res_add[number], v1_add[number], v2_add[number], dest_add[number])
@@ -22,6 +24,7 @@ def add_exe(number, instruction):
 		adder.busy_add[number] = 1
 		op_res_add[number] = instruction[0]
 		dest_add[number] = instruction[1]
+		system.busy_reg[int(dest_add[number][1])] = 1
 		v1_add[number] = instruction[2]
 		v2_add[number] = instruction[3]
 
@@ -40,12 +43,13 @@ def add_exe(number, instruction):
 				v2_add[number] = system.register[reg_number]
 
 		system.instruction_issued = 1
-		system.stall = 0	
+		system.stall["add"] = 0
+		#system.inst_queue.pop(0)	
 
-		#print("instruction", instruction, "issued to reservation station", number)		
+		print("instruction", instruction, "issued to reservation station", number)		
 
 	if number == system.add_number-1 and system.instruction_issued == 0 and (instruction[0] == "ADD" or instruction[0] == "SUB"):
-		system.stall = 1
+		system.stall["add"] = 1
 
 
 global op_res_mul, v1_mul, v2_mul, dest_mul
@@ -69,6 +73,7 @@ def mul_exe(number, instruction):
 		multiplier.busy_mul[number] = 1
 		op_res_mul[number] = instruction[0]
 		dest_mul[number] = instruction[1]
+		system.busy_reg[int(dest_mul[number][1])] = 1
 		v1_mul[number] = instruction[2]
 		v2_mul[number] = instruction[3]
 
@@ -87,9 +92,10 @@ def mul_exe(number, instruction):
 				v2_mul[number] = system.register[reg_number]
 
 		system.instruction_issued = 1
-		system.stall = 0	
+		system.stall["mul"] = 0
+		#system.inst_queue.pop(0)	
 
 		#print("instruction", instruction, "issued to reservation station", number)		
 
 	if number == system.add_number-1 and system.instruction_issued == 0 and (instruction[0] == "MUL" or instruction[0] == "DIV"):
-		system.stall = 1
+		system.stall["mul"] = 1

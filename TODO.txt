@@ -1,5 +1,4 @@
 TODO:
 
-	- 	load/store
 	-	comment and proper read_me
 	-	class

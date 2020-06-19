@@ -34,3 +34,7 @@ for system.clock in range(1,system.max_time):
 
 	## Next clock cycle
 	time.sleep(system.sleep_duration)
+
+for i in range(len(system.mem)):
+	print("Memory slot", i, ": ", system.mem[i], sep='')
+
