@@ -1,8 +1,10 @@
 # Tomasulo Algorithm Simulator in Python
 
-##Introduction
+## Introduction
 
-This project is a simulator of the Tomasulo algorithm
+This project is a simulator of the Tomasulo algorithm.
+This powerful algorithm allows for out-of-order execution while keeping the order of the instructions. The instruction is stored in a reservation station until it has all the data needed to compute the instruction. The result will be send back on a Common Data Bus and every object (registers and reservation stations) that needs the data will get it.
+Hence the stalling of the machine should be reduced by allowing certain operations to be executed after instructions which were issued after them.
 
 ## Building
 Download the folder

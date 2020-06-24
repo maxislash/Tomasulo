@@ -1,4 +1,3 @@
 TODO:
 
-	-	comment and proper read_me
-	-	class
+	-	Modify the program to use classes instead of the different modules. It seems neater and more Python that way. Will implement if time allows but not necessary since it's working as it is now
