@@ -11,44 +11,44 @@ dest_add = [0]*system.add_number
 
 def add_exe(number, instruction):
 
-	print("reservation station number", number, "parse instruction", instruction, "busy", adder.busy_add[number], "issued", system.instruction_issued)
+	#print("reservation station number", number, "parse instruction", instruction, "busy", adder.busy_add[number], "issued", system.instruction_issued)
 
-	if adder.busy_add[number] == 1 and adder.start_add[number] == 0:
-		if isinstance(v1_add[number], int) and isinstance(v2_add[number], int):
+	if adder.busy_add[number] == 1 and adder.start_add[number] == 0: ##If the instruction has been registered by the reservation station but not yet started on the ALU because one data was missing
+		if isinstance(v1_add[number], int) and isinstance(v2_add[number], int): ##Check if we have all the data needed now, if yes, start the ALU
 			adder.exe(number, op_res_add[number], v1_add[number], v2_add[number], dest_add[number])
 
 		#print(number, op_res_add[number], v1_add[number], v2_add[number], dest_add[number])
 
-	if adder.busy_add[number] == 0 and (instruction[0] == "ADD" or instruction[0] == "SUB") and system.instruction_issued == 0:
+	if adder.busy_add[number] == 0 and (instruction[0] == "ADD" or instruction[0] == "SUB") and system.instruction_issued == 0: ##If we get an instruction from IF/ID and the reservation station isn't already busy
 
-		adder.busy_add[number] = 1
+		adder.busy_add[number] = 1 ##Mark the reservation station has busy and keep the instruction
 		op_res_add[number] = instruction[0]
 		dest_add[number] = instruction[1]
 		system.busy_reg[int(dest_add[number][1])] = 1
 		v1_add[number] = instruction[2]
 		v2_add[number] = instruction[3]
 
-		if(v1_add[number][0] != 'R'):
+		if(v1_add[number][0] != 'R'): ##If first operand is immediate, store it in the reservation station
 			v1_add[number] = int(v1_add[number])	
-		else:
+		else: ##Otherwise, check if the register wanted has a value and isn't being used
 			reg_number = int(v1_add[number][1])
 			if system.busy_reg[reg_number] == 0 and system.empty_reg[reg_number] == 0:
 				v1_add[number] = system.register[reg_number]
 		
-		if(v2_add[number][0] != 'R'):
+		if(v2_add[number][0] != 'R'): #Same for second operand
 			v2_add[number] = int(v2_add[number])
 		else:
 			reg_number = int(v2_add[number][1])
 			if system.busy_reg[reg_number] == 0 and system.empty_reg[reg_number] == 0:
 				v2_add[number] = system.register[reg_number]
 
-		system.instruction_issued = 1
+		system.instruction_issued = 1 ##Instruction was registered by the reservation station
 		system.stall["add"] = 0
 		#system.inst_queue.pop(0)	
 
 		print("instruction", instruction, "issued to reservation station", number)		
 
-	if number == system.add_number-1 and system.instruction_issued == 0 and (instruction[0] == "ADD" or instruction[0] == "SUB"):
+	if number == system.add_number-1 and system.instruction_issued == 0 and (instruction[0] == "ADD" or instruction[0] == "SUB"):## If all the reservation station are busy, stall
 		system.stall["add"] = 1
 
 

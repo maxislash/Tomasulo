@@ -1,3 +1,5 @@
+## System contains the different constraints of the system (maximum number of clock cycle, instructions to be processed, how many adder, ...) as well as the common part of the machine (registers, memory, ...)
+
 global add_number
 add_number = 3
 
